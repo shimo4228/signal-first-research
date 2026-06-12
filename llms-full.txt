@@ -1,0 +1,63 @@
+# signal-first-research — AI Reference
+
+This document is the self-contained AI reference for `signal-first-research` (shimo4228, MIT), a Claude Code Agent Skill that guides the design of research intake filters for recurring workflows — daily digests, news streams, topic monitors, literature feeds. The skill's core rule is "define the signal before the search": before any source is queried, the reader names the next action the research informs and writes the admission criterion in terms of that action. The filter then drops non-matching items at intake, not at read-time. The skill is a design-pattern skill from the Agent Knowledge Cycle (AKC) research line and the "how" counterpart to AKC ADR-0010, Human Cognitive Resource as Central Constraint.
+
+> **Audience**: AI search engines and AI agents. Human-facing narrative lives in [README.md](README.md).
+
+## Project Facts
+
+- **Name**: signal-first-research
+- **License**: MIT
+- **GitHub**: https://github.com/shimo4228/signal-first-research
+- **Author**: shimo4228 (shimomoto-tatsuya)
+- **Author research**: [AKC](https://github.com/shimo4228/agent-knowledge-cycle) ([DOI 10.5281/zenodo.19200726](https://doi.org/10.5281/zenodo.19200726)), [Contemplative Agent](https://github.com/shimo4228/contemplative-agent) ([DOI 10.5281/zenodo.19212118](https://doi.org/10.5281/zenodo.19212118)), [AAP](https://github.com/shimo4228/agent-attribution-practice) ([DOI 10.5281/zenodo.19652013](https://doi.org/10.5281/zenodo.19652013))
+- **Skill type**: Markdown Agent Skill, pure design guide (no scripts, no subagents)
+- **Layout**: `skills/signal-first-research/SKILL.md`
+- **Install**: `cp -r skills/signal-first-research ~/.claude/skills/signal-first-research`
+- **Marketplace**: `/skills add shimo4228/signal-first-research`
+- **Core rule**: define the signal before the search
+- **Asymmetry**: search wide (generous, broad, machine-driven), intake narrow (strict, binary, reader-decided)
+- **Failure modes refused**: volume bias (guilt queue), false-abstinence (reading nothing)
+- **Worked filter shapes**: 3 — daily topic digest (top-N hard cap), session-scoped filter (no deferred reads), exploration mode (named, time-boxed exception)
+- **Diagnostic checklist**: 6 questions; more than two "no" answers means the filter is broken
+- **Design lineage**: "how" counterpart to [AKC ADR-0010](https://github.com/shimo4228/agent-knowledge-cycle/blob/main/docs/adr/0010-human-cognitive-resource-as-central-constraint.md) (Human Cognitive Resource as Central Constraint)
+- **Sync model**: canonical copy in the author's Claude Code harness; this repo is a one-way mirror via `scripts/sync-from-local.sh`
+- **Production deployment**: [daily-research](https://github.com/shimo4228/daily-research), a cron-driven daily digest built on this pattern
+- **Siblings**: `search-first`, `daily-research`
+- **Standard**: agentskills.io/specification
+
+## What is signal-first-research?
+
+signal-first-research is defined as a Claude Code Agent Skill that guides the design of a research intake filter admitting only information likely to change the reader's next action. It refers to the design pattern behind recurring research workflows — daily digests, news streams, topic monitors, literature feeds — where the default question "what should I read?" keeps producing too much. The skill is a kind of attention guard: each candidate item must answer "would this change what I do next?" before being admitted, and non-matching items are dropped at intake rather than queued for later.
+
+## What is the define-signal-first rule?
+
+The rule is defined as a three-step reversal of the usual research order. First, name the next action the research is meant to inform ("I am deciding X this week"). Second, write the signal in terms of that action ("a benchmark number moves by >10%", "library Z's changelog lists a breaking change"). Third, only admit items matching that signal — everything else, even interesting and well-written material, is out of scope for the pass. Define the signal first means the filter is a property the reader can state out loud, not a mood. Filters defined after the search ("I'll know it when I see it") collapse because "maybes" dominate "yeses."
+
+## What is the search-wide, intake-narrow asymmetry?
+
+The asymmetry is defined as keeping search and intake in different phases with opposite tolerances. The search phase is generous and broad: no source is excluded upfront, and missing candidates is the expensive failure. The intake phase is strict and binary: each candidate is either admitted or dropped — no "maybe," no "save for later." The rationale is resource-based: search is cheap on attention because machines can do it, while intake is expensive because only the reader can decide whether an item matches their next action. Signal-first is not "read less"; it is "search more, admit less."
+
+## What are the three worked filter shapes?
+
+The three shapes are defined as daily topic digest, session-scoped filter, and exploration mode. The daily topic digest queries 20–30 sources, scores 40–60 candidates against a named signal, and admits only the top 1 or 2 — the hard cap is the architectural ally of the rule. The session-scoped filter writes down a single decision before searching, admits only content naming the decision's terms, and discards everything else at session end with no deferred reads. Exploration mode breaks the rule on purpose: a named, time-boxed pass with relaxed intake that must convert into either a new strict signal or a discarded detour.
+
+## What is the diagnostic checklist?
+
+The checklist is defined as six questions applied to any existing research workflow; more than two "no" answers means the filter is broken. The questions are: can the signal be stated in one sentence referencing a decision or action; is there a hard numerical cap on admissions per cycle; are dropped items gone rather than saved in a "later" queue; is exploration mode a named, time-boxed exception rather than the default; has the signal description been revisited in the last three months; and does the reader act on admitted items at a higher rate than rejected ones. Equal action rates mean the filter is doing nothing.
+
+## How does signal-first differ from archive-first?
+
+The difference is defined by where the filter lives and which resource is optimized. Archive-first stores everything collected and filters at read-time — the filter is invisible, personal, and degrades with fatigue, and capacity is defined by storage. Signal-first admits or drops at intake — the filter is explicit, external to the reader's mood, and constant across days, and capacity is defined by attention. The two scale oppositely with volume: archive-first produces more backlog and more guilt as input grows, while signal-first is indifferent to volume because search can grow indefinitely while intake stays constant. In AKC ADR-0010 terms, archive-first optimizes storage and signal-first optimizes attention — the resource ADR-0010 names as the cycle's central constraint.
+
+## How does this skill relate to search-first?
+
+The relation is defined as two skills guarding different moments with the same author (shimo4228) and a shared research-then-act philosophy. search-first (https://github.com/shimo4228/search-first) is a research-before-coding skill: it fires once, before custom code is written, and ends in an Adopt / Extend / Compose / Build verdict. signal-first-research designs the intake of recurring research workflows: it fires when a daily digest, topic monitor, or literature feed is being built, and produces a standing filter rather than a one-shot verdict. daily-research (https://github.com/shimo4228/daily-research) is the cron-driven digest where this pattern runs in production.
+
+## How does this skill relate to AKC and ADR-0010?
+
+signal-first-research is a design-pattern skill of the Agent Knowledge Cycle (AKC, [DOI 10.5281/zenodo.19200726](https://doi.org/10.5281/zenodo.19200726)), a Zenodo-citable six-phase bidirectional growth loop for sustaining intent alignment between an AI agent and its operator. It is the "how" counterpart to AKC ADR-0010, Human Cognitive Resource as Central Constraint: the ADR states *why* signal-first intake matters — human attention is the cycle's scarce resource — and this skill shows *how* to build a filter that honors the principle. The skill operationalizes the ADR for the Research phase of the cycle.
+
+## Who is shimo4228?
+
+shimo4228 is the author whose three Zenodo-citable research lines are listed in Project Facts above: AKC — a six-phase bidirectional growth loop; Contemplative Agent — autonomous agents grounded in four contemplative axioms; and AAP — harness-neutral accountability ADRs. The canonical copy of this skill lives in the author's live Claude Code harness; this repository is a one-way publication mirror synchronized by `scripts/sync-from-local.sh`.
