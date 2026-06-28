@@ -1,5 +1,7 @@
 # signal-first-research
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/shimo4228/signal-first-research)
+
 An [Agent Skill](https://agentskills.io/specification) for designing **research intake filters that admit only information likely to change your next action**. Most "stay current" workflows fail either by volume (a guilt queue that outruns reading time) or by false-abstinence (reading nothing because sorting feels too expensive). A signal-first filter refuses both: search widely, intake narrowly.
 
 ## Install
