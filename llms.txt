@@ -1,10 +1,10 @@
 # signal-first-research
 
-> A Claude Code skill (MIT) that guides the design of research intake filters admitting only information likely to change your next action. Refuses both volume bias (a guilt queue that outruns reading time) and false-abstinence (reading nothing because sorting feels too expensive). Core rule: define the signal before the search.
+> An Agent Skill (MIT; developed on Claude Code, portable to other Agent Skills-compatible agents) that guides the design of research intake filters admitting only information likely to change your next action. Refuses both volume bias (a guilt queue that outruns reading time) and false-abstinence (reading nothing because sorting feels too expensive). Core rule: define the signal before the search.
 
 ## Core documentation
 
-- [llms-full.txt](llms-full.txt): self-contained Q&A reference for AI agents (Project Facts, 8 question-form H2 sections)
+- [llms-full.txt](llms-full.txt): self-contained Q&A reference for AI agents (Project Facts and question-form H2 sections)
 - [README.md](README.md): human-facing narrative (install, how it works, failure-mode table)
 - [SKILL.md](skills/signal-first-research/SKILL.md): full skill specification — define-signal-first rule, search-wide/intake-narrow asymmetry, three worked filter shapes, diagnostic checklist
 
@@ -15,15 +15,15 @@
 - Three worked filter shapes: **daily topic digest** (top-N hard cap), **session-scoped filter** (no deferred reads), **exploration mode** (named, time-boxed exception that breaks the rule on purpose)
 - Diagnostic checklist: six questions; more than two "no" answers means the filter is broken
 - Design lineage: the "how" counterpart to [AKC ADR-0010 Human Cognitive Resource as Central Constraint](https://github.com/shimo4228/agent-knowledge-cycle/blob/main/docs/adr/0010-human-cognitive-resource-as-central-constraint.md)
-- Sync model: canonical copy lives in the author's Claude Code harness; this repo is a one-way mirror via `scripts/sync-from-local.sh`
+- Status: frozen public record; the skill still installs and works as written, but it is no longer synced from the author's harness (which retired its copy) or developed; the principle now lives in skills such as [search-first](https://github.com/shimo4228/search-first)
 
 ## Standard reference
 
-- [Agent Skill specification](https://agentskills.io/specification): the Claude Code skill format used by this repo
-- [SkillsMP marketplace](https://agentskills.io/specification): one-step install via `/skills add`
+- [Agent Skill specification](https://agentskills.io/specification): the open Agent Skills format used by this repo
 
 ## Sibling skills
 
-- [search-first](https://github.com/shimo4228/search-first): research-before-coding workflow — distinct role: search-first guards the moment before writing code, this skill designs the intake of recurring research workflows
-- [daily-research](https://github.com/shimo4228/daily-research): cron-driven daily research digest — the production deployment of this pattern
-- [agent-knowledge-cycle](https://github.com/shimo4228/agent-knowledge-cycle): the AKC research line this skill belongs to ([DOI 10.5281/zenodo.19200726](https://doi.org/10.5281/zenodo.19200726))
+- [search-first](https://github.com/shimo4228/search-first): the live skill that carries this principle into practice: it makes the agent search registries, code, papers and official docs before you decide, and report what it found — distinct role: search-first guards a one-off decision, this skill designs the intake of recurring research workflows
+- [daily-research](https://github.com/shimo4228/daily-research): a daily research pipeline for your own repositories (`claude -p` and macOS launchd) that picks one external development per repository each morning: narrow intake in practice
+- [agent-knowledge-cycle](https://github.com/shimo4228/agent-knowledge-cycle): the AKC practice line whose ADR-0010 this skill is the "how" counterpart to ([DOI 10.5281/zenodo.19200726](https://doi.org/10.5281/zenodo.19200726)); cite AKC, as this repository has no DOI of its own
+- [shimo4228](https://github.com/shimo4228/shimo4228): the author's hub, listing AKC with the author's other practice lines and their DOIs
